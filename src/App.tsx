@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Route, Routes, useLocation, useParams } from 'react-router-dom';
 import Footer from './components/Footer';
 import Header from './components/Header';
+import { LoginPage, SignupPage } from './pages/Auth';
 import Cart from './pages/Cart';
 import Goods from './pages/Goods';
 import Home from './pages/Home';
@@ -42,6 +43,8 @@ export default function App() {
           <Route path="/creator/:id" element={<CreatorShop />} />
           <Route path="/product/:id" element={<ProductRoute />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

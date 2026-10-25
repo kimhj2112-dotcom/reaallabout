@@ -1,0 +1,24 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "users": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid",
+        ".validate": "newData.hasChildren(['name', 'email'])",
+        "name": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 40" },
+        "email": { ".validate": "newData.isString() && newData.val() === auth.token.email" }
+      }
+    },
+    "loginLogs": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        "$logId": {
+          ".write": "auth != null && auth.uid === $uid && !data.exists()",
+          ".validate": "newData.hasChildren(['type', 'at']) && newData.child('type').val().matches(/^(signup|login|logout)$/)"
+        }
+      }
+    }
+  }
+}

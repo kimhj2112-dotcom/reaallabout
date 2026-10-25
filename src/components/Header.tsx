@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { POPULAR_KEYWORDS } from '../data/catalog';
+import { useAuth } from '../store/auth';
 import { useCart } from '../store/cart';
 
 const NAV = [
@@ -23,7 +24,12 @@ function loadRecent(): string[] {
 
 export default function Header() {
   const { count } = useCart();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  // 로그인 후 보던 페이지로 돌아오도록 현재 주소를 넘김
+  const here = location.pathname + location.search;
+  const loginHref = ['/', '/login', '/signup'].includes(location.pathname) ? '/login' : `/login?redirect=${encodeURIComponent(here)}`;
   const [q, setQ] = useState('');
   const [open, setOpen] = useState(false);
   const [recent, setRecent] = useState<string[]>(loadRecent);
@@ -53,8 +59,17 @@ export default function Header() {
       <div className="header__util container">
         <span className="header__notice">크리에이터와 팬을 잇는 굿즈 마켓</span>
         <nav className="header__utilnav">
-          <a href="#login" onClick={(e) => e.preventDefault()}>로그인</a>
-          <a href="#signup" onClick={(e) => e.preventDefault()}>회원가입</a>
+          {user ? (
+            <>
+              <span className="header__user">{user.name}님</span>
+              <button type="button" onClick={logout}>로그아웃</button>
+            </>
+          ) : (
+            <>
+              <Link to={loginHref}>로그인</Link>
+              <Link to="/signup">회원가입</Link>
+            </>
+          )}
           <select aria-label="언어" defaultValue="ko">
             <option value="ko">KOR</option>
             <option value="en">ENG</option>
@@ -118,7 +133,11 @@ export default function Header() {
           <Link to="/cart" className="iconbtn" aria-label="장바구니">
             🛒{count > 0 && <span className="iconbtn__count">{count}</span>}
           </Link>
-          <a href="#my" className="iconbtn" aria-label="마이페이지" onClick={(e) => e.preventDefault()}>👤</a>
+          {user ? (
+            <span className="iconbtn" title={`${user.name}님`} aria-label={`${user.name}님 로그인됨`}>👤</span>
+          ) : (
+            <Link to={loginHref} className="iconbtn" aria-label="로그인">👤</Link>
+          )}
         </div>
       </div>
 
