@@ -26,7 +26,6 @@ export function CurationPage() {
         {curations.map((c) => (
           <Link key={c.id} to={`/curation/${c.id}`} className="cur" style={{ background: `hsl(${c.hue} 60% 95%)` }}>
             <div>
-              <span className="hero__tag hero__tag--dark">CURATION</span>
               <h3>{c.title}</h3>
               <p>{c.desc}</p>
             </div>
@@ -49,7 +48,6 @@ export function CurationDetail() {
   return (
     <div className="container page">
       <div className="banner" style={{ background: `hsl(${c.hue} 60% 94%)` }}>
-        <span className="hero__tag hero__tag--dark">CURATION</span>
         <h1>{c.title}</h1>
         <p>{c.desc}</p>
       </div>

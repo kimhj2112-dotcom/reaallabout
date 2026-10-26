@@ -4,6 +4,7 @@ import PreorderCard from '../components/PreorderCard';
 import ProductCard from '../components/ProductCard';
 import Section from '../components/Section';
 import { Avatar, ProductArt } from '../components/Art';
+import Icon, { type IconName } from '../components/Icon';
 import {
   creatorRanking,
   curations,
@@ -16,13 +17,13 @@ import {
   ranking,
 } from '../data/catalog';
 
-const QUICK = [
-  { to: '/ranking', emoji: '🏆', label: '주간 랭킹' },
-  { to: '/goods?sort=new', emoji: '🆕', label: '신상품' },
-  { to: '/goods?handmade=1', emoji: '🧶', label: '핸드메이드' },
-  { to: '/preorder', emoji: '🚀', label: '프리오더' },
-  { to: '/curation', emoji: '🎁', label: '큐레이션' },
-  { to: '/creators', emoji: '🎨', label: '크리에이터' },
+const QUICK: { to: string; icon: IconName; label: string }[] = [
+  { to: '/ranking', icon: 'trophy', label: '주간 랭킹' },
+  { to: '/goods?sort=new', icon: 'sparkle', label: '신상품' },
+  { to: '/goods?handmade=1', icon: 'scissors', label: '핸드메이드' },
+  { to: '/preorder', icon: 'calendar', label: '프리오더' },
+  { to: '/curation', icon: 'gift', label: '큐레이션' },
+  { to: '/creators', icon: 'pen', label: '크리에이터' },
 ];
 
 export default function Home() {
@@ -31,12 +32,13 @@ export default function Home() {
   return (
     <>
       <div className="container">
+        <h1 className="sr-only">리얼올어바웃 크리에이터 굿즈 마켓</h1>
         <HeroCarousel />
 
         <nav className="quick">
           {QUICK.map((q) => (
             <Link key={q.label} to={q.to} className="quick__item">
-              <span className="quick__icon">{q.emoji}</span>
+              <span className="quick__icon"><Icon name={q.icon} size={24} /></span>
               <span>{q.label}</span>
             </Link>
           ))}
@@ -104,7 +106,6 @@ export default function Home() {
             {curations.slice(0, 2).map((c) => (
               <Link key={c.id} to={`/curation/${c.id}`} className="cur" style={{ background: `hsl(${c.hue} 60% 95%)` }}>
                 <div>
-                  <span className="hero__tag hero__tag--dark">CURATION</span>
                   <h3>{c.title}</h3>
                   <p>{c.desc}</p>
                 </div>

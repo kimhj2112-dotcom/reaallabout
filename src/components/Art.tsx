@@ -13,9 +13,6 @@ export function ProductArt({ product, large = false }: { product: Product; large
       aria-label={product.title}
     >
       <span className="art__item">{typeInfo(product.type).emoji}</span>
-      <span className="art__badge" style={{ background: `hsl(${h} 55% 45%)` }}>
-        {creator.emoji}
-      </span>
     </div>
   );
 }

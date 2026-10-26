@@ -3,6 +3,7 @@ import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { POPULAR_KEYWORDS } from '../data/catalog';
 import { useAuth } from '../store/auth';
 import { useCart } from '../store/cart';
+import Icon from './Icon';
 
 const NAV = [
   { to: '/ranking', label: '실시간·랭킹' },
@@ -94,7 +95,7 @@ export default function Header() {
             onFocus={() => setOpen(true)}
             aria-label="검색"
           />
-          <button type="submit" aria-label="검색하기">🔍</button>
+          <button type="submit" aria-label="검색하기"><Icon name="search" size={20} /></button>
           {open && (
             <div className="search__panel">
               {recent.length > 0 && (
@@ -131,12 +132,13 @@ export default function Header() {
         <div className="header__actions">
           <Link to="/creators" className="btn btn--dark btn--sm hide-mobile">크리에이터 입점</Link>
           <Link to="/cart" className="iconbtn" aria-label="장바구니">
-            🛒{count > 0 && <span className="iconbtn__count">{count}</span>}
+            <Icon name="bag" />
+            {count > 0 && <span className="iconbtn__count">{count}</span>}
           </Link>
           {user ? (
-            <span className="iconbtn" title={`${user.name}님`} aria-label={`${user.name}님 로그인됨`}>👤</span>
+            <span className="iconbtn" title={`${user.name}님`} role="img" aria-label={`${user.name}님 로그인됨`}><Icon name="user" /></span>
           ) : (
-            <Link to={loginHref} className="iconbtn" aria-label="로그인">👤</Link>
+            <Link to={loginHref} className="iconbtn" aria-label="로그인"><Icon name="user" /></Link>
           )}
         </div>
       </div>

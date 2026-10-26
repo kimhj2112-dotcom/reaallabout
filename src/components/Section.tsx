@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import Icon from './Icon';
 
 interface Props {
   title: string;
@@ -18,7 +19,7 @@ export default function Section({ title, sub, more, children }: Props) {
         </div>
         {more && (
           <Link to={more} className="section__more">
-            더보기 →
+            더보기 <Icon name="chevronRight" size={16} />
           </Link>
         )}
       </div>
